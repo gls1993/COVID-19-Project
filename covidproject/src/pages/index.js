@@ -21,7 +21,7 @@ const LOCATION = { lat: 0, lng: 0 };   // middle of the world
 
   const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
-const ZOOM = 10;
+const ZOOM = 2;
 
 const timeToZoom = 2000;
 
@@ -45,18 +45,19 @@ function countryPointToLayer (feature = {}, latlng) {
   
   if (updated)      { updatedFormatted = new Date(updated).toLocaleString(); }
 
+
   const html = `
     <span class="icon-marker">
       <span class="icon-marker-tooltip">
         <h2>${country}</h2>
         <ul>
-          <li><strong>Confirmed:</strong> ${cases}</li>
-          <li><strong>Deaths:</strong> ${deaths}</li>
-          <li><strong>Recovered:</strong> ${recovered}</li>
+          <li><strong>Confirmed:</strong> ${commafy(cases)}</li>
+          <li><strong>Deaths:</strong> ${commafy(deaths)}</li>
+          <li><strong>Recovered:</strong> ${commafy(recovered)}</li>
           <li><strong>Last Update:</strong> ${updatedFormatted}</li>
         </ul>
       </span>
-      ${casesString} 
+      ${commafy(casesString)} 
     </span>
   `;
 
@@ -181,19 +182,28 @@ const IndexPage = () => {
         <Marker ref={markerRef} position={CENTER} />
       </Map>
       <div className="tracker-stats-container">
-        {/* <h2>COVID-19 Tracker Data</h2> */}
         <div className="tracker-stats">
-          <div className="tracker-stat tracker-stat-primary">
-            <strong>Total Cases:</strong> {commafy(data.cases)}
+          <div className="tracker-stat">
+            <strong>Total Cases: </strong>
+            {commafy(data.cases)}
+          </div>
+          <div className="tracker-stat">
+            <strong>Cases per 1 million: </strong>
+            {commafy(data.casesPerOneMillion)}
+          </div>
+          <div className="tracker-stat">
+            <strong>Total Deaths:</strong>
+            {commafy(data.deaths)}
+          </div>
+          <div className="tracker-stat">
+            <strong>Deaths per 1 million: </strong>
+            {data.deathsPerOneMillion}
           </div>
           <div className="tracker-stat tracker-stat-primary">
-            <strong>Total Deaths:</strong> {commafy(data.deaths)}
-          </div>
-          <div className="tracker-stat tracker-stat-primary">
-            <strong>Total Recovered:</strong> {commafy(data.recovered)}
+            <strong>Total Recovered: </strong> {commafy(data.recovered)}
           </div>
           <div className="tracker-stat tracker-stat-secondary">
-            <strong>Last Updated:</strong> {friendlyDate(data.updated)}
+            <strong>Last Updated: </strong> {friendlyDate(data.updated)}
           </div>
         </div>
       </div>
