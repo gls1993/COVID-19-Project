@@ -41,13 +41,22 @@ export function commafy( value ) {
  * @description Takes in a date value and returns a friendly version
  */
 
-export function friendlyDate( value ) {
-  const date = new Date( value );
-  return new Intl.DateTimeFormat( 'en', {
+export function friendlyDate(value) {
+  if (!value) {
+    return ''; // Handle cases where value is not provided
+  }
+
+  const date = new Date(value);
+
+  if (isNaN(date.getTime())) {
+    return ''; // Handle invalid date values
+  }
+
+  return new Intl.DateTimeFormat('en', {
     year: 'numeric',
     month: 'short',
     day: '2-digit',
     hour: 'numeric',
     minute: 'numeric',
-  }).format( date );
+  }).format(date);
 }

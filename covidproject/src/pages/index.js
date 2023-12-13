@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import L from "leaflet";
 import { Marker, useMap } from "react-leaflet";
+import { commafy, friendlyDate } from 'lib/util';
+
 
 import { promiseToFlyTo, getCurrentLocation } from "lib/map";
 
@@ -11,6 +13,8 @@ import Container from "components/Container";
 import Map from "components/Map";
 
 import axios from 'axios';
+import useTracker from '../hooks/useTracker';
+import '../assets/stylesheets/components/_tracker.scss'
 
 const LOCATION = { lat: 0, lng: 0 };   // middle of the world
   // { lat: 38.9072, lng: -77.0369 };  // in Los Angeles
@@ -65,6 +69,7 @@ function countryPointToLayer (feature = {}, latlng) {
   });
 }
 
+
 const MapEffect = ({ markerRef }) => {
   console.log('in MapEffect...');
   const map = useMap();
@@ -108,6 +113,7 @@ const MapEffect = ({ markerRef }) => {
 
       const data = response.data;     // for disease.sh
       const hasData = Array.isArray(data) && data.length > 0;
+      console.log('Stats Data:', data);
       if (!Array.isArray(data)) { console.log('not an array!'); return; }
       if (data.length === 0) { console.log('data length is === 0'); }
 
@@ -155,6 +161,7 @@ MapEffect.propTypes = {
 };
 
 const IndexPage = () => {
+  const { data, loading, error } = useTracker();
   console.log('in IndexPage, before useRef');
   const markerRef = useRef();
 
@@ -166,13 +173,30 @@ const IndexPage = () => {
 
   return (
     <Layout pageName="home">
-      <Helmet><title>Home Page</title></Helmet>
-      {/* do not delete MapEffect and Marker
-             with current code or axios will not run */}
+      <Helmet>
+        <title>Home Page</title>
+      </Helmet>
       <Map {...mapSettings}>
-       <MapEffect markerRef={markerRef} />            
-       <Marker ref={markerRef} position={CENTER} />
+        <MapEffect markerRef={markerRef} />
+        <Marker ref={markerRef} position={CENTER} />
       </Map>
+      <div className="tracker-stats-container">
+        {/* <h2>COVID-19 Tracker Data</h2> */}
+        <div className="tracker-stats">
+          <div className="tracker-stat tracker-stat-primary">
+            <strong>Total Cases:</strong> {commafy(data.cases)}
+          </div>
+          <div className="tracker-stat tracker-stat-primary">
+            <strong>Total Deaths:</strong> {commafy(data.deaths)}
+          </div>
+          <div className="tracker-stat tracker-stat-primary">
+            <strong>Total Recovered:</strong> {commafy(data.recovered)}
+          </div>
+          <div className="tracker-stat tracker-stat-secondary">
+            <strong>Last Updated:</strong> {friendlyDate(data.updated)}
+          </div>
+        </div>
+      </div>
       <Container type="content" className="text-center home-start">
         <h2>Still Getting Started?</h2>
       </Container>
