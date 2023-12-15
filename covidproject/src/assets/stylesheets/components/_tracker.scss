@@ -1,8 +1,9 @@
+
 .tracker-stats-container {
   background-color: #333;
   color: white;
   border-top: solid 1px #222;
-  padding: 1em; 
+  padding: 1em;
 }
 
 .tracker-stats {
@@ -13,7 +14,7 @@
 
 .tracker-stat {
   flex: 0 0 calc(33.33% - 1em);
-  font-size: 1em; 
+  font-size: 1em;
   text-align: center;
   padding: 0.5em;
   border-right: solid 1px #222;
@@ -29,18 +30,16 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-
   background-color: #333;
   color: white;
+  height: 80vh;
 }
 
 .dashboard-left,
-.dashboard-right{
+.dashboard-right {
   flex: 1;
-  border: 2px solid black;
   text-align: center;
 }
-
 
 .dashboard-left {
   border: 2px solid black;
@@ -55,7 +54,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
   height: 100%;
 }
 
