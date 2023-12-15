@@ -135,9 +135,9 @@ const MapEffect = ({ markerRef }) => {
 
       const location = await getCurrentLocation().catch(() => LOCATION);
 
-      setTimeout(async () => {
-        await promiseToFlyTo(map, { zoom: ZOOM, center: location, });
-      }, timeToZoom);
+      // setTimeout(async () => {
+      //   await promiseToFlyTo(map, { zoom: ZOOM, center: location, });
+      // }, timeToZoom);
     })();
   }, [map, markerRef]);
 
@@ -183,9 +183,9 @@ const IndexPage = () => {
         <Marker ref={markerRef} position={CENTER} />
       </Map>
     </div>
-    <div className="dashboard-right">
+    {/* <div className="dashboard-right">
       <Charts/>
-    </div>
+    </div> */}
   </div>
 
   <div className="tracker-stats-container">

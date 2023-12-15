@@ -4,7 +4,8 @@ footer {
   height: 2em;
   line-height: 2em;
   text-align: center;
-  background-color: $blue-grey-700;
+  // background-color: $blue-grey-700;
+  background-color: $gatsby-purple;
 
   &,
   a {
@@ -15,5 +16,5 @@ footer {
     font-size: 1em;
     margin: 0;
   }
-
+  margin-top: -20px;
 }
