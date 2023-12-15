@@ -1,0 +1,61 @@
+.tracker-stats-container {
+  background-color: #333;
+  color: white;
+  border-top: solid 1px #222;
+  padding: 1em; 
+}
+
+.tracker-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.tracker-stat {
+  flex: 0 0 calc(33.33% - 1em);
+  font-size: 1em; 
+  text-align: center;
+  padding: 0.5em;
+  border-right: solid 1px #222;
+  border-bottom: solid 1px #222;
+  margin-bottom: 1em;
+}
+
+.tracker-stat:last-child {
+  border-right: none;
+}
+
+.dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+
+  background-color: #333;
+  color: white;
+}
+
+.dashboard-left,
+.dashboard-right{
+  flex: 1;
+  border: 2px solid black;
+  text-align: center;
+}
+
+
+.dashboard-left {
+  border: 2px solid black;
+}
+
+.dashboard-right {
+
+}
+
+.dashboard-map {
+  flex: 4;
+  border: 2px solid black;
+}
+
+.country-stat {
+  border-bottom: 2px solid black;
+}
+
