@@ -16,11 +16,12 @@ import axios from 'axios';
 import useTracker from '../hooks/useTracker';
 import '../assets/stylesheets/components/_tracker.scss'
 import BarChart from "../components/BarChart";
+import CountryStatistics from "../components/CountryStatistics";
 
 const LOCATION = { lat: 0, lng: 0 };   // middle of the world
   // { lat: 38.9072, lng: -77.0369 };  // in Los Angeles
 
-  const CENTER = [LOCATION.lat, LOCATION.lng];
+const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
 const ZOOM = 2;
 
@@ -82,24 +83,10 @@ const MapEffect = ({ markerRef }) => {
     (async function run() {
       console.log('about to call axios to get the data...');
 
-      // const options = {
-      //   method: 'GET',
-      //   url: 'https://api.api-ninjas.com/v1/covid19',
-      //   // params: {country: 'China'},    // for one country -- if blank will get all countries
-      //   headers: {
-      //     'X-API-Key': 'Vx489MBLcso/FNugQeMLNw==7tSBYITt1WeQkCTu',
-      //     'X-API-Host': 'api.api-ninjas.com'
-      //   }
-      // };
-
-
       const options = {
         method: 'GET',
         url: 'https://disease.sh/v3/covid-19/countries',
-        // params: {country: 'China'},    // for one country -- if blank will get all countries
-        // headers: {
-        //   'Disease.sh': 'disease.sh'
-        // }
+
       };
       
       let response; 
@@ -110,8 +97,6 @@ const MapEffect = ({ markerRef }) => {
         return; 
       }
       console.log(response.data);
-      // const rdr = response.data.response;    // for rapidapi
-      // const data = rdr;
 
       const data = response.data;     // for disease.sh
       const hasData = Array.isArray(data) && data.length > 0;
@@ -172,22 +157,24 @@ const IndexPage = () => {
     defaultBaseMap: "OpenStreetMap",
     zoom: DEFAULT_ZOOM,
   };
-
+  console.log("Data: ", data);
   return (
     <Layout pageName="home">
   <Helmet>
     <title>Home Page</title>
   </Helmet>
   {/* <BarChart/> */}
-
+  
   <div className="dashboard-container">
     <div className="dashboard-left">
       <div className="country-stat">
-        {/* sample data */}
+        {/* sample data
         <h3>United States</h3>
         <p>Total Cases: 10,000</p>
-        <p>Total Deaths: 500</p>
+        <p>Total Deaths: 500</p> */}
+        <CountryStatistics countriesData={data} />
       </div>
+      
     </div>
     <div className="dashboard-map">
       <Map {...mapSettings}>
