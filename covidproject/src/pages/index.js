@@ -15,6 +15,7 @@ import Map from "components/Map";
 import axios from 'axios';
 import useTracker from '../hooks/useTracker';
 import '../assets/stylesheets/components/_tracker.scss'
+import BarChart from "../components/BarChart";
 
 const LOCATION = { lat: 0, lng: 0 };   // middle of the world
   // { lat: 38.9072, lng: -77.0369 };  // in Los Angeles
@@ -174,43 +175,57 @@ const IndexPage = () => {
 
   return (
     <Layout pageName="home">
-      <Helmet>
-        <title>Home Page</title>
-      </Helmet>
+  <Helmet>
+    <title>Home Page</title>
+  </Helmet>
+  {/* <BarChart/> */}
+
+  <div className="dashboard-container">
+    <div className="dashboard-left">
+      <div className="country-stat">
+        {/* sample data */}
+        <h3>United States</h3>
+        <p>Total Cases: 10,000</p>
+        <p>Total Deaths: 500</p>
+      </div>
+    </div>
+    <div className="dashboard-map">
       <Map {...mapSettings}>
         <MapEffect markerRef={markerRef} />
         <Marker ref={markerRef} position={CENTER} />
       </Map>
-      <div className="tracker-stats-container">
-        <div className="tracker-stats">
-          <div className="tracker-stat">
-            <strong>Total Cases: </strong>
-            {commafy(data.cases)}
-          </div>
-          <div className="tracker-stat">
-            <strong>Cases per 1 million: </strong>
-            {commafy(data.casesPerOneMillion)}
-          </div>
-          <div className="tracker-stat">
-            <strong>Total Deaths:</strong>
-            {commafy(data.deaths)}
-          </div>
-          <div className="tracker-stat">
-            <strong>Deaths per 1 million: </strong>
-            {data.deathsPerOneMillion}
-          </div>
-          <div className="tracker-stat tracker-stat-primary">
-            <strong>Total Recovered: </strong> {commafy(data.recovered)}
-          </div>
-          <div className="tracker-stat tracker-stat-secondary">
-            <strong>Last Updated: </strong> {friendlyDate(data.updated)}
-          </div>
-        </div>
+    </div>
+    <div className="dashboard-right"></div>
+  </div>
+
+  <div className="tracker-stats-container">
+    <div className="tracker-stats">
+      <div className="tracker-stat">
+        <strong>Total Cases: </strong>
+        {commafy(data.cases)}
       </div>
-      <Container type="content" className="text-center home-start">
-        <h2>Still Getting Started?</h2>
-      </Container>
-    </Layout>
+      <div className="tracker-stat">
+        <strong>Cases per 1 million: </strong>
+        {commafy(data.casesPerOneMillion)}
+      </div>
+      <div className="tracker-stat">
+        <strong>Total Deaths: </strong>
+        {commafy(data.deaths)}
+      </div>
+      <div className="tracker-stat">
+        <strong>Deaths per 1 million: </strong>
+        {data.deathsPerOneMillion}
+      </div>
+      <div className="tracker-stat tracker-stat-primary">
+        <strong>Total Recovered: </strong> {commafy(data.recovered)}
+      </div>
+      <div className="tracker-stat tracker-stat-secondary">
+        <strong>Last Updated: </strong> {friendlyDate(data.updated)}
+      </div>
+    </div>
+  </div>
+</Layout>
+
   );
 };
 
