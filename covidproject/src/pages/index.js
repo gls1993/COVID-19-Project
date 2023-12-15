@@ -15,8 +15,9 @@ import Map from "components/Map";
 import axios from 'axios';
 import useTracker from '../hooks/useTracker';
 import '../assets/stylesheets/components/_tracker.scss'
-import BarChart from "../components/BarChart";
+import Charts from "../components/Charts";
 import CountryStatistics from "../components/CountryStatistics";
+import { Bar } from "@nivo/bar";
 
 const LOCATION = { lat: 0, lng: 0 };   // middle of the world
   // { lat: 38.9072, lng: -77.0369 };  // in Los Angeles
@@ -182,7 +183,9 @@ const IndexPage = () => {
         <Marker ref={markerRef} position={CENTER} />
       </Map>
     </div>
-    <div className="dashboard-right"></div>
+    <div className="dashboard-right">
+      <Charts/>
+    </div>
   </div>
 
   <div className="tracker-stats-container">
