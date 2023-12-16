@@ -66,3 +66,5 @@ We would like to acknowledge the following individuals for their contributions t
 ---
 
 ## Screenshots
+
+![Full page](https://github.com/gls1993/COVID-19-Project/assets/14078583/1df05f92-bf60-4707-8547-bbd1f0338dab)
