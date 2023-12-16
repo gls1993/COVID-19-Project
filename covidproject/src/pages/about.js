@@ -22,6 +22,15 @@ const AboutPage = () => {
           Our platform offers real-time data, vaccination information, safety guidelines, and resources to help individuals stay informed and safe during these challenging times.
         </p>
 
+        <p className="about-content">
+          Data for this project is sourced from <a href="https://disease.sh/">disease.sh</a>.
+        </p>
+
+        <h2>Inspiration</h2>
+        <p className="about-content">
+          This project was inspired by the COVID-19 dashboard created by <a href="https://twitter.com/colbyfayock">Colby Fayock</a>.
+        </p>
+
         <h2>Key Features</h2>
         <ul>
           <li>Real-time COVID-19 Data</li>
