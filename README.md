@@ -79,7 +79,7 @@ We would like to acknowledge the following individuals for their contributions t
 
 ![world stats](https://github.com/gls1993/COVID-19-Project/assets/14078583/c179b9a0-5375-42fd-91ba-80864e2f7468)
 
-![charts](https://github.com/gls1993/COVID-19-Project/assets/14078583/0e3c4188-14ec-49c4-a5e1-d62a7dfe852e)
+![charts](https://github.com/gls1993/COVID-19-Project/assets/14078583/1d6d8db2-f5fd-4336-b6a6-7ad720164069)
 
 ![information](https://github.com/gls1993/COVID-19-Project/assets/14078583/61190b14-18e2-45fb-83c5-13e5b32765e6)
 
