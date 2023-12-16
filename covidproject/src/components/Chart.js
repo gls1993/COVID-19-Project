@@ -38,10 +38,20 @@ const pieData = [
 
 const Charts = () => {
 
+  // vars to hold data
+  // line graph data
   const [chartData, setChartData] = useState([]);
   const [deathLineData, setDeathLineData] = useState([]);
   const [recoveredLineData, setRecoveredLineData] = useState([]);
 
+  // pie chart data 
+  const [totalWWData, setTotalWWData] = useState([]);
+  const [dailyWWData, setDailyWWData] = useState([]);
+  const [totalUSAData, setTotalUSAData] = useState([]);
+  
+  
+
+  // api request for cases history (line graphs)
   useEffect(() => {
     fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=all')
       .then(response => {
@@ -55,6 +65,7 @@ const Charts = () => {
         const deathData = data.deaths || {};
         const recoveredData = data.recovered || {};
 
+        // process data
         const transformedData = Object.entries(casesData).map(([date, cases]) => ({
           x: new Date(date), 
           y: cases,
@@ -70,6 +81,7 @@ const Charts = () => {
           y: recovered,
         }));
 
+        // store in vars
         setChartData([
           {
             id: 'COVID-19 Cases',
@@ -94,6 +106,99 @@ const Charts = () => {
       });
   }, []);
 
+
+
+  // api request for worldwide covid stats (pie chart)
+  useEffect(() => {
+    fetch('https://disease.sh/v3/covid-19/all')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // total
+        setTotalWWData ([
+          {
+            id: 'Cases',
+            label: 'Cases',
+            value: data.cases,
+          },
+          {
+            id: 'Deaths',
+            label: 'Deaths',
+            value: data.deaths,
+          },
+          {
+            id: 'Recovered',
+            label: 'Recovered',
+            value: data.recovered,
+          },
+        ]);
+
+        // daily
+        setDailyWWData ([
+          {
+            id: 'Cases',
+            label: 'Cases',
+            value: data.todayCases,
+          },
+          {
+            id: 'Deaths',
+            label: 'Deaths',
+            value: data.todayDeaths,
+          },
+          {
+            id: 'Recovered',
+            label: 'Recovered',
+            value: data.todayRecovered,
+          },
+        ]);
+        console.log(dailyWWData);
+      })
+      .catch(error => {
+        console.error('There was a problem fetching the data:', error);
+      });
+  }, []);
+
+
+  // api request for total usa covid stats (pie chart)
+  useEffect(() => {
+    fetch('https://disease.sh/v3/covid-19/countries/usa')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // total
+        setTotalUSAData ([
+          {
+            id: 'Cases',
+            label: 'Cases',
+            value: data.cases,
+          },
+          {
+            id: 'Deaths',
+            label: 'Deaths',
+            value: data.deaths,
+          },
+          {
+            id: 'Recovered',
+            label: 'Recovered',
+            value: data.recovered,
+          },
+        ]);
+
+      })
+      .catch(error => {
+        console.error('There was a problem fetching the data:', error);
+      });
+  }, []);
+
+  // rendering graphs
   return (
     <Paper elevation={3} style={{ padding: '1em' }}>
 
@@ -257,37 +362,6 @@ const Charts = () => {
             />
             
           </div>
-
-          
-          {/* Second graph in the second row */}
-          <div style={{ height: '250px', width: '48%' }}>
-            <Typography variant="h5">Comparing Current Cases, Deaths, And Recovered Over Time</Typography>
-            <ResponsiveLine
-              data={chartData}
-              margin={{ top: 50, right: 80, bottom: 50, left: 60 }}
-              xScale={{ type: 'time', format: '%Y-%m-%d', useUTC: false, precision: 'day' }}
-              yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}
-              curve="monotoneX"
-              axisBottom={{
-                format: '%b %d', // Format for displaying dates on X-axis
-                tickValues: 'every 3 days', // Show ticks every 3 days
-                legend: 'Date',
-                legendOffset: 36,
-                legendPosition: 'middle',
-              }}
-              axisLeft={{
-                legend: 'Cases',
-                legendOffset: -40,
-                legendPosition: 'middle',
-              }}
-              enablePoints={true}
-              lineWidth={3}
-              colors={{ scheme: 'category10' }}
-              enableGridX={false}
-              enableGridY={true}
-              useMesh={true}
-            />
-          </div>
         </div>
 
       
@@ -300,7 +374,7 @@ const Charts = () => {
         <div style={{ height: '300px', width: '30%', textAlign:'center' }}>
         <Typography variant="h5">Total Worldwide Cases</Typography>
         <ResponsivePie
-          data={pieData}
+          data={totalWWData}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
           colors={{ scheme: 'category10' }}
         />
@@ -310,7 +384,7 @@ const Charts = () => {
         <div style={{ height: '300px', width: '30%', textAlign:'center' }}>
         <Typography variant="h5">Daily Worldwide Cases</Typography>
         <ResponsivePie
-          data={pieData}
+          data={dailyWWData}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
           colors={{ scheme: 'category10' }}
           legends={[
@@ -340,9 +414,9 @@ const Charts = () => {
         {/* Third pie chart */}
         <div style={{ height: '300px', width: '30%', textAlign:'center' }}>
          {/* selected country or USA */}
-        <Typography variant="h5">(selectedCountry's or USA)'s Current Cases</Typography>
+        <Typography variant="h5">USA's Total Cases</Typography>
         <ResponsivePie
-          data={pieData}
+          data={totalUSAData}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
           colors={{ scheme: 'category10' }}
         />
