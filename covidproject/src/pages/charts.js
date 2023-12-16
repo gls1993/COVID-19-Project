@@ -5,9 +5,11 @@ import '../assets/stylesheets/pages/_charts.scss'
 export const charts = () => {
   return (
     <Layout>
+      <title>Charts</title>
       <div className='charts-container'></div>
-        <div>charts</div>
-        <Charts/>
+        <div>
+          <Charts/>
+        </div>
     </Layout>
   )
 }
