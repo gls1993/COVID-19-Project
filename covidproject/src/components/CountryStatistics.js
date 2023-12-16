@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axios from 'axios';
-import { commafy, friendlyDate } from 'lib/util';
+import { commafy } from 'lib/util';
 import '../assets/stylesheets/components//_statistics.scss';
 
 const CountryStatistics = () => {

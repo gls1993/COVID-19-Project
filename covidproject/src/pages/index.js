@@ -5,28 +5,19 @@ import L from "leaflet";
 import { Marker, useMap } from "react-leaflet";
 import { commafy, friendlyDate } from 'lib/util';
 
-
-import { promiseToFlyTo, getCurrentLocation } from "lib/map";
-
 import Layout from "components/Layout";
-import Container from "components/Container";
 import Map from "components/Map";
 
 import axios from 'axios';
 import useTracker from '../hooks/useTracker';
 import '../assets/stylesheets/components/_tracker.scss'
-import Charts from "../components/Charts";
-import CountryStatistics from "../components/CountryStatistics";
-import { Bar } from "@nivo/bar";
+import Tables from "../components/Tables";;
 
 const LOCATION = { lat: 0, lng: 0 };   // middle of the world
   // { lat: 38.9072, lng: -77.0369 };  // in Los Angeles
 
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
-const ZOOM = 2;
-
-const timeToZoom = 2000;
 
 function countryPointToLayer (feature = {}, latlng) { 
   const { properties = {} } = feature;
@@ -133,8 +124,6 @@ const MapEffect = ({ markerRef }) => {
       var _map = markerRef.current._map;
       geoJsonLayers.addTo(_map);
 
-      const location = await getCurrentLocation().catch(() => LOCATION);
-
       // setTimeout(async () => {
       //   await promiseToFlyTo(map, { zoom: ZOOM, center: location, });
       // }, timeToZoom);
@@ -149,7 +138,7 @@ MapEffect.propTypes = {
 };
 
 const IndexPage = () => {
-  const { data, loading, error } = useTracker();
+  const { data } = useTracker();
   console.log('in IndexPage, before useRef');
   const markerRef = useRef();
 
@@ -164,18 +153,9 @@ const IndexPage = () => {
   <Helmet>
     <title>Home Page</title>
   </Helmet>
-  {/* <BarChart/> */}
-  
   <div className="dashboard-container">
     <div className="dashboard-left">
-      <div className="country-stat">
-        {/* sample data
-        <h3>United States</h3>
-        <p>Total Cases: 10,000</p>
-        <p>Total Deaths: 500</p> */}
-        <CountryStatistics countriesData={data} />
-      </div>
-      
+      <Tables/>
     </div>
     <div className="dashboard-map">
       <Map {...mapSettings}>
@@ -183,9 +163,6 @@ const IndexPage = () => {
         <Marker ref={markerRef} position={CENTER} />
       </Map>
     </div>
-    {/* <div className="dashboard-right">
-      <Charts/>
-    </div> */}
   </div>
 
   <div className="tracker-stats-container">
